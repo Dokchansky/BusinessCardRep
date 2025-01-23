@@ -8,6 +8,8 @@ public class Context : DbContext
     public DbSet<UserViewModel> Users { get; set; }
     public DbSet<BusinessCardViewModel> BusinessCards { get; set; }
     public DbSet<CategoryViewModel> Categories { get; set; }
+    public DbSet<TokenViewModel> Tokens { get; set; }
+    public DbSet<RefreshTokenViewModel> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -67,6 +69,18 @@ public class Context : DbContext
 
         modelBuilder.Entity<UserViewModel>()
             .HasMany(u => u.Categories)
+            .WithOne(c => c.Users)
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<UserViewModel>()
+            .HasMany(u => u.RefreshTokens)
+            .WithOne(c => c.Users)
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<UserViewModel>()
+            .HasMany(u => u.BusinessCards)
             .WithOne(c => c.Users)
             .HasForeignKey(c => c.UserId)
             .OnDelete(DeleteBehavior.Cascade);

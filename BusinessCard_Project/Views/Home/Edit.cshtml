@@ -1,0 +1,49 @@
+﻿@model BusinessCardViewModel
+
+<h1>Редактировать визитку</h1>
+
+<form asp-action="Edit">
+    @Html.HiddenFor(m => m.Id)
+
+    <div>
+        <label>Имя:</label>
+        <input asp-for="FirstName" />
+    </div>
+    <div>
+        <label>Фамилия:</label>
+        <input asp-for="LastName" />
+    </div>
+    <div>
+        <label>Отчество:</label>
+        <input asp-for="MiddleName" />
+    </div>
+    <div>
+        <label>Должность:</label>
+        <input asp-for="Position" />
+    </div>
+    <div>
+        <label>Компания:</label>
+        <input asp-for="Company" />
+    </div>
+    <div>
+        <label>Телефон:</label>
+        <input asp-for="Phone" />
+    </div>
+    <div>
+        <label>Email:</label>
+        <input asp-for="Email" />
+    </div>
+    <div>
+        <label>Веб-сайт:</label>
+        <input asp-for="Website" />
+    </div>
+    <div>
+        <label>Социальная сеть:</label>
+        <input asp-for="SocialMedia" />
+    </div>
+
+
+    <button type="submit">Сохранить изменения</button>
+</form>
+
+<a href="@Url.Action("Index")">Назад к списку визиток</a>

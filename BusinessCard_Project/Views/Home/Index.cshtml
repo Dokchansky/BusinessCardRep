@@ -1,8 +1,45 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<BusinessCardViewModel>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome Test</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Визитки</h1>
+
+<a href="@Url.Action("Create")">Создать новую визитку</a>
+
+<table>
+<thead>
+<tr>
+    <th>Имя</th>
+    <th>Фамилия</th>
+    <th>Отчество</th>
+    <th>Должность</th>
+    <th>Компания</th>
+    <th>Телефон</th>
+    <th>Email</th>
+    <th>Веб-сайт</th>
+    <th>Социальные сети</th>
+    <th>Логотип</th>
+    <th>Действия</th>
+</tr>
+</thead>
+    <tbody>
+    @foreach (var card in Model)
+    {
+        <tr>
+            <td>@card.FirstName</td>
+            <td>@card.LastName</td>
+            <td>@card.MiddleName</td>
+            <td>@card.Position</td>
+            <td>@card.Company</td>
+            <td>@card.Phone</td>
+            <td>@card.Email</td>
+            <td>@card.Website</td>
+            <td>@card.SocialMedia</td>
+            <td><img src="@($"data:image/png;base64,{Convert.ToBase64String(card.Logo)}")" alt="Логотип" width="50" height="50" /></td>
+            <td>
+                <a href="@Url.Action("Edit", new { id = card.Id })">Редактировать</a> |
+                <a href="@Url.Action("Delete", new { id = card.Id })">Удалить</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
