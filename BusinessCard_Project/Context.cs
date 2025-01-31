@@ -3,13 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using BusinessCard_Project.Models;
 public class Context : DbContext
 {
-    public Context(DbContextOptions<Context> options) : base(options) { }
+    protected readonly IConfiguration Configuration;
 
+    protected override void OnConfiguring(DbContextOptionsBuilder options)
+    {
+        options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+    }
+    
+    public Context(DbContextOptions<Context> options, IConfiguration configuration) : base(options)
+    {
+        Configuration = configuration;
+    }
     public DbSet<UserViewModel> Users { get; set; }
     public DbSet<BusinessCardViewModel> BusinessCards { get; set; }
     public DbSet<CategoryViewModel> Categories { get; set; }
-    public DbSet<TokenViewModel> Tokens { get; set; }
     public DbSet<RefreshTokenViewModel> RefreshTokens { get; set; }
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

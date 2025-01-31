@@ -10,15 +10,11 @@ namespace BusinessCard_Project.Controllers
 
         public BusinessCardController(Context context)
         {
-
             _context = context;
-            
-            
         }
         public IActionResult Index()
         {
-            var cards = _context.BusinessCards.ToList();
-            return View(cards);
+            return View();
         }
 
         public IActionResult Create()
