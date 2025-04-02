@@ -8,7 +8,7 @@ namespace BusinessCard_Project.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly Context _context;
-
+        static List<BusinessCardViewModel> cardmodel = new List<BusinessCardViewModel>();
 
 
         public HomeController(Context context)
@@ -18,7 +18,7 @@ namespace BusinessCard_Project.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(cardmodel);
         }
         
         public IActionResult Create()
@@ -31,12 +31,12 @@ namespace BusinessCard_Project.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(BusinessCardViewModel card)
+        public IActionResult Create(BusinessCardViewModel card)
         {
             if (ModelState.IsValid)
             {
-                _context.BusinessCards.Add(card);
-                await _context.SaveChangesAsync();
+                card.Id = cardmodel.Count;
+                cardmodel.Add(card);
                 return RedirectToAction(nameof(Index));
             }
             return View(card);

@@ -16,7 +16,6 @@
     <th>Email</th>
     <th>Веб-сайт</th>
     <th>Социальные сети</th>
-    <th>Логотип</th>
     <th>Действия</th>
 </tr>
 </thead>
@@ -35,7 +34,6 @@
                 <td>@card.Email</td>
                 <td>@card.Website</td>
                 <td>@card.SocialMedia</td>
-                <td><img src="@($"data:image/png;base64,{Convert.ToBase64String(card.Logo)}")" alt="Логотип" width="50" height="50"/></td>
                 <td>
                     <a href="@Url.Action("Edit", new { id = card.Id })">Редактировать</a> |
                     <a href="@Url.Action("Delete", new { id = card.Id })">Удалить</a>
