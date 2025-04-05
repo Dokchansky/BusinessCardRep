@@ -35,8 +35,11 @@ namespace BusinessCard_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                card.Id = cardmodel.Count;
-                cardmodel.Add(card);
+                
+                card.CreatedAt = DateTime.UtcNow;
+                card.UpdatedAt = DateTime.UtcNow;
+                _context.BusinessCards.Add(card);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(card);
@@ -65,22 +68,20 @@ namespace BusinessCard_Project.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var card = await _context.BusinessCards.FindAsync(id);
-            if (card == null) return NotFound();
-            return View(card);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var card = await _context.BusinessCards.FindAsync(id);
-            if (card != null)
+            var cardToRemove = cardmodel.Find(x => x.Id == id);
+            
+            if (cardToRemove == null)
             {
-                _context.BusinessCards.Remove(card);
-                await _context.SaveChangesAsync();
+                return NotFound();
+            }
+            else
+            {
+                cardmodel.Remove(cardToRemove);
             }
             return RedirectToAction(nameof(Index));
         }
+
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
