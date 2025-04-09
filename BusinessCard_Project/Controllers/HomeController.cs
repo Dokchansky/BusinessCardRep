@@ -1,16 +1,15 @@
 using BusinessCard_Project.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace BusinessCard_Project.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly Context _context;
-        static List<BusinessCardViewModel> cardmodel = new List<BusinessCardViewModel>();
-
-
+        Context _context;
+        
         public HomeController(Context context)
         {
             _context = context; 
@@ -18,7 +17,8 @@ namespace BusinessCard_Project.Controllers
 
         public IActionResult Index()
         {
-            return View(cardmodel);
+            var cards = _context.BusinessCards.ToList();
+            return View(cards);
         }
         
         public IActionResult Create()
@@ -31,16 +31,15 @@ namespace BusinessCard_Project.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(BusinessCardViewModel card)
+        public async Task<IActionResult> Create(BusinessCardViewModel card)
         {
             if (ModelState.IsValid)
             {
-                
                 card.CreatedAt = DateTime.UtcNow;
                 card.UpdatedAt = DateTime.UtcNow;
                 _context.BusinessCards.Add(card);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
             }
             return View(card);
         }
@@ -59,7 +58,9 @@ namespace BusinessCard_Project.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(card);
+                
+                card.UpdatedAt = DateTime.UtcNow;
+                _context.BusinessCards.Update(card);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -68,16 +69,10 @@ namespace BusinessCard_Project.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var cardToRemove = cardmodel.Find(x => x.Id == id);
+            var cardToRemove = _context.BusinessCards.Find(id);
             
-            if (cardToRemove == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                cardmodel.Remove(cardToRemove);
-            }
+            _context.BusinessCards.Remove(cardToRemove);
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 

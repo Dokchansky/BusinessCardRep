@@ -15,7 +15,7 @@ public class Context : DbContext
         Configuration = configuration;
     }
     public DbSet<UserViewModel> Users { get; set; }
-    public DbSet<BusinessCardViewModel> BusinessCards { get; set; }
+    public DbSet<BusinessCardViewModel> BusinessCards { get; set; } = null!;
     public DbSet<CategoryViewModel> Categories { get; set; }
     public DbSet<RefreshTokenViewModel> RefreshTokens { get; set; }
     
@@ -67,6 +67,10 @@ public class Context : DbContext
         modelBuilder.Entity<BusinessCardViewModel>()
             .Property(b => b.Website)
             .HasMaxLength(256);
+        
+        modelBuilder.Entity<BusinessCardViewModel>()
+            .Property(b => b.SocialMedia)
+            .HasMaxLength(256);
 
         modelBuilder.Entity<CategoryViewModel>()
             .HasKey(c => c.Id);
@@ -88,10 +92,6 @@ public class Context : DbContext
             .HasForeignKey(c => c.UserId)
             .OnDelete(DeleteBehavior.Cascade);
         
-        modelBuilder.Entity<UserViewModel>()
-            .HasMany(u => u.BusinessCards)
-            .WithOne(c => c.Users)
-            .HasForeignKey(c => c.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+        
     }
 }

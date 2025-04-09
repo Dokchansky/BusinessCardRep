@@ -9,6 +9,6 @@
         public DateTime UpdatedAt { get; set; }
 
         public virtual UserViewModel? Users { get; set; } 
-        public virtual ICollection<BusinessCardViewModel> BusinessCards { get; set; } = new List<BusinessCardViewModel>();
+        
     }
 }
