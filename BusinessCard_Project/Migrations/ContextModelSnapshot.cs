@@ -22,6 +22,35 @@ namespace BusinessCard_Project.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("BusinessCard_Project.Entities.UserAccount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("UserAccounts");
+                });
+
             modelBuilder.Entity("BusinessCard_Project.Models.BusinessCardViewModel", b =>
                 {
                     b.Property<int>("Id")
@@ -74,7 +103,7 @@ namespace BusinessCard_Project.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("UserViewModelId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Website")
@@ -84,7 +113,7 @@ namespace BusinessCard_Project.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserViewModelId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("BusinessCards");
                 });
@@ -118,99 +147,32 @@ namespace BusinessCard_Project.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("BusinessCard_Project.Models.RefreshTokenViewModel", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ID"));
-
-                    b.Property<DateTime>("Expiration")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RefreshTokens");
-                });
-
-            modelBuilder.Entity("BusinessCard_Project.Models.UserViewModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("BusinessCard_Project.Models.BusinessCardViewModel", b =>
                 {
-                    b.HasOne("BusinessCard_Project.Models.UserViewModel", null)
+                    b.HasOne("BusinessCard_Project.Entities.UserAccount", "UserAccounts")
                         .WithMany("BusinessCards")
-                        .HasForeignKey("UserViewModelId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("UserAccounts");
                 });
 
             modelBuilder.Entity("BusinessCard_Project.Models.CategoryViewModel", b =>
                 {
-                    b.HasOne("BusinessCard_Project.Models.UserViewModel", "Users")
+                    b.HasOne("BusinessCard_Project.Entities.UserAccount", "UserAccounts")
                         .WithMany("Categories")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Users");
+                    b.Navigation("UserAccounts");
                 });
 
-            modelBuilder.Entity("BusinessCard_Project.Models.RefreshTokenViewModel", b =>
-                {
-                    b.HasOne("BusinessCard_Project.Models.UserViewModel", "Users")
-                        .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("BusinessCard_Project.Models.UserViewModel", b =>
+            modelBuilder.Entity("BusinessCard_Project.Entities.UserAccount", b =>
                 {
                     b.Navigation("BusinessCards");
 
                     b.Navigation("Categories");
-
-                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }

@@ -20,6 +20,9 @@ namespace BusinessCard_Project.Controllers
             var cards = _context.BusinessCards.ToList();
             return View(cards);
         }
+
+       
+        
         
         public IActionResult Create()
         {
@@ -35,8 +38,7 @@ namespace BusinessCard_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                card.CreatedAt = DateTime.UtcNow;
-                card.UpdatedAt = DateTime.UtcNow;
+
                 _context.BusinessCards.Add(card);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -83,6 +85,7 @@ namespace BusinessCard_Project.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
+
     }
 }

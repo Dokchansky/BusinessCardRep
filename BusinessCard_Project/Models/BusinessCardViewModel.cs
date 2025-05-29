@@ -1,4 +1,6 @@
-﻿namespace BusinessCard_Project.Models
+﻿using BusinessCard_Project.Entities;
+
+namespace BusinessCard_Project.Models
 {
     public class BusinessCardViewModel
     {
@@ -15,6 +17,9 @@
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public int? UserId { get; set; }
+        
+
         
     }
 

@@ -1,4 +1,6 @@
-﻿namespace BusinessCard_Project;
+﻿using BusinessCard_Project.Entities;
+
+namespace BusinessCard_Project;
 using Microsoft.EntityFrameworkCore;
 using BusinessCard_Project.Models;
 public class Context : DbContext
@@ -14,24 +16,25 @@ public class Context : DbContext
     {
         Configuration = configuration;
     }
-    public DbSet<UserViewModel> Users { get; set; }
+
+    public DbSet<UserAccount> UserAccounts { get; set; }
     public DbSet<BusinessCardViewModel> BusinessCards { get; set; } = null!;
     public DbSet<CategoryViewModel> Categories { get; set; }
-    public DbSet<RefreshTokenViewModel> RefreshTokens { get; set; }
+
     
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<UserViewModel>()
+        modelBuilder.Entity<UserAccount>()
         .HasKey(u => u.Id);
 
-        modelBuilder.Entity<UserViewModel>()
+        modelBuilder.Entity<UserAccount>()
             .Property(u => u.Email)
             .IsRequired()
             .HasMaxLength(256);
 
-        modelBuilder.Entity<UserViewModel>()
+        modelBuilder.Entity<UserAccount>()
             .Property(u => u.PasswordHash)
             .IsRequired();
 
@@ -80,18 +83,15 @@ public class Context : DbContext
             .IsRequired()
             .HasMaxLength(100);
 
-        modelBuilder.Entity<UserViewModel>()
+        modelBuilder.Entity<UserAccount>()
             .HasMany(u => u.Categories)
-            .WithOne(c => c.Users)
+            .WithOne(c => c.UserAccounts)
             .HasForeignKey(c => c.UserId)
             .OnDelete(DeleteBehavior.Cascade);
         
-        modelBuilder.Entity<UserViewModel>()
-            .HasMany(u => u.RefreshTokens)
-            .WithOne(c => c.Users)
-            .HasForeignKey(c => c.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+
         
+
         
     }
 }

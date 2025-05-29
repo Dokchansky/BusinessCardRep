@@ -1,4 +1,6 @@
-﻿namespace BusinessCard_Project.Models
+﻿using BusinessCard_Project.Entities;
+
+namespace BusinessCard_Project.Models
 {
     public class CategoryViewModel
     {
@@ -8,7 +10,7 @@
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        public virtual UserViewModel? Users { get; set; } 
+        public virtual UserAccount UserAccounts { get; set; } 
         
     }
 }
