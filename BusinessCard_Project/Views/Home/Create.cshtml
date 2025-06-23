@@ -84,7 +84,7 @@
 
 <h1>Создать визитку</h1>
 
-<form asp-action="Create" enctype="multipart/form-data">
+<form asp-action="Create" enctype="multipart/form-data" valign="top">
     <div>
         <label>Имя:</label>
         <input asp-for="FirstName" type="text" />
@@ -124,7 +124,7 @@
 
     <button type="submit">Создать</button>
     
-    <a href="@Url.Action("Index")" class="back-link">Назад к списку визиток</a>
+    <a href="@Url.Action("Index")" class="back-link">Назад ↩︎</a>
 </form>
 
 </body>

@@ -15,13 +15,12 @@ namespace BusinessCard_Project.Controllers
             _context = context; 
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
-            var cards = _context.BusinessCards.ToList();
-            return View(cards);
+             // var cards = _context.BusinessCards.ToList();
+            // return View(cards);
+            return View(_context.BusinessCards.Where(x => x.Company.Contains(searchString) || searchString == null).ToList());
         }
-
-       
         
         
         public IActionResult Create()
@@ -45,6 +44,7 @@ namespace BusinessCard_Project.Controllers
             }
             return View(card);
         }
+        
 
         public async Task<IActionResult> Edit(int id)
         {
