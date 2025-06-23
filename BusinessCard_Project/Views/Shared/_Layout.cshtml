@@ -6,7 +6,7 @@
     <title>@ViewData["Title"]CardShare</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/BusinessCard_Project.styles.css" asp-append-version="true" />
+
 </head>
 <body>
     <header>
@@ -34,11 +34,97 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - CardShare <a asp-area="" asp-controller="Home" asp-action="Privacy"> Политика конфиденциальности </a>
+
+<style>
+    footer {
+        background-color: #2c3e50; /* Темно-синий фон */
+        color: #ecf0f1; /* Светлый текст */
+        padding: 12px 20px; /* Отступы */
+        font-family: Arial, sans-serif; /* Шрифт */
+        font-size: 14px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    
+    h3{
+        font-size: 16px;
+    }
+
+    .footer-container {
+        display: flex; /* Используем flexbox для расположения колонок */
+        justify-content: space-between; /* Пробел между колонками */
+        max-width: 1200px; /* Максимальная ширина контейнера */
+        margin: 0 auto; /* Центрируем футер */
+    }
+
+    .contact-info, .links, .about {
+        flex: 1; /* Каждая колонка занимает равное пространство */
+        margin-right: 20px; /* Отступ между колонками */
+    }
+
+    .contact-info h3, .links h3, .about h3 {
+        border-bottom: 2px solid #ecf0f1; /* Подчеркивание заголовков */
+        padding-bottom: 10px; /* Отступ снизу */
+    }
+
+    .links ul {
+        list-style-type: none; /* Убираем маркеры списка */
+        padding: 0; /* Убираем отступы */
+    }
+
+    .links ul li {
+        margin: 10px 0; /* Отступы между элементами списка */
+    }
+
+    .links a {
+        color: #ecf0f1; /* Цвет ссылок */
+        text-decoration: none; /* Убираем подчеркивание */
+    }
+
+    .links a:hover {
+        text-decoration: underline; /* Подчеркивание при наведении */
+    }
+
+    .footer-bottom {
+        text-align: center; /* Выравниваем текст по центру */
+        margin-top: 20px; /* Отступ сверху */
+        font-size: 14px; /* Размер шрифта */
+    }
+
+
+    .contact-info, .links, .about {
+        margin-right: 0; /* Убираем отступы между колонками */
+        margin-bottom: 20px; /* Отступ снизу для каждой колонки */
+    }
+    
+</style>
+
+<footer>
+        <div class="footer-container">
+            <div class="about">
+                <h3>CardShare</h3>
+                <p>Веб-приложение для создания и обмена визитными карточками. Упрощайте процесс знакомства и делитесь контактной информацией с помощью удобных и стильных визиток.</p>
+            </div>
+            <div class="links">
+                <h3>Полезные ссылки</h3>
+                <ul>
+                    <li><a asp-controller="Home" asp-action="Privacy">Политика конфиденциальности</a></li>
+                    <li><a asp-controller="Home" asp-action="TermsOfUse">Условия использования</a></li>
+                </ul>
+            </div>
+            
+            <div class="contact-info">
+                <h3>Контакты</h3>
+                <p>Адрес: ул. Ленина, д. 149, г. Кострома, Россия</p>
+                <p>Телефон: +7 (123) 456-78-90</p>
+                <p>Email: bironincres@gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CardShare. Все права защищены.</p>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

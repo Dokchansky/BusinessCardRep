@@ -32,6 +32,12 @@ namespace BusinessCard_Project.Controllers
         {
             return View();
         }
+
+        public IActionResult TermsOfUse()
+        {
+            return View();
+        }
+        
         [HttpPost]
         public async Task<IActionResult> Create(BusinessCardViewModel card)
         {
